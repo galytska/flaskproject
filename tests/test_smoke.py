@@ -1,3 +1,13 @@
-def test_empty_db(client):
-    rv = client.get('/')
-    assert rv.status_code == 200
+"""
+Smoke tests
+"""
+
+
+def test_status_code(client):
+    """
+    Check status code
+    :param client: client fixture
+    :return: bool
+    """
+    return_value = client.get('/')
+    assert return_value.status_code == 200
