@@ -1,2 +1,2 @@
 # flaskproject
-[![Coverage Status](https://coveralls.io/repos/github/galytska/flaskproject/badge.svg)](https://coveralls.io/github/galytska/flaskproject)
+[![Coverage Status](https://coveralls.io/repos/github/galytska/flaskproject/badge.svg?branch=master)](https://coveralls.io/github/galytska/flaskproject?branch=master)
