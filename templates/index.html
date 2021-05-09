@@ -7,7 +7,11 @@
 <body>
 <h1>Good news only</h1>
 {% for news in good_news %}
-<li>{{ news.news_text }}</li>
+<li>
+    <a href="{{url_for('news', news_id = news.id)}}">
+        {{ news.news_text }}</a>
+
+</li>
 {% endfor %}
 
 <form method="POST">
