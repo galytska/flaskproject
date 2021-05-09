@@ -9,7 +9,7 @@
 {% for news in good_news %}
 <li>
     <a href="{{url_for('news', news_id = news.id)}}">
-        {{ news.news_text }}</a>
+        {{ news.title }}</a>
 
 </li>
 {% endfor %}

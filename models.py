@@ -3,7 +3,8 @@ from app import db
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    news_text = db.Column(db.String(100), index=True)
+    text = db.Column(db.String(500), index=True)
+    title = db.Column(db.String(50), index=True)
 
     journalist_id = db.Column(db.Integer, db.ForeignKey('journalist.id'))
 
@@ -19,3 +20,5 @@ class Journalist(db.Model):
 
     def __repr__(self):
         return "Journalist: {}".format(self.email)
+
+

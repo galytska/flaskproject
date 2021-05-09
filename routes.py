@@ -4,7 +4,7 @@ Routes of the application
 from app import app, db
 from flask import render_template, request
 from flask_wtf import FlaskForm
-from models import News
+from models import News, Journalist
 from wtforms import StringField, SubmitField
 
 
@@ -40,4 +40,6 @@ def news(news_id):
     """
     news = News.query.filter_by(
         id=news_id).first_or_404(description="There is no news with this ID.")
-    return render_template('news.html', news=news)
+
+    return render_template('news.html', news=news,
+                           journalist=news.journalist)
