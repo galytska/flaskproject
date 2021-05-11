@@ -3,17 +3,9 @@ Routes of the application
 """
 from app import app, db
 from flask import render_template, request
-from flask_wtf import FlaskForm
+
+from forms import GoodNewsForm, RegistrationForm
 from models import News, Journalist
-from wtforms import StringField, SubmitField
-
-
-class GoodNewsForm(FlaskForm):
-    """
-    Allows add new news
-    """
-    news = StringField('news')
-    submit = SubmitField('Add news')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -23,7 +15,7 @@ def index():
     :return: render_template function call
     """
     if 'news' in request.form:
-        db.session.add(News(news_text=request.form['news']))
+        db.session.add(News(title=request.form['news'], text=request.form['news_text']))
         db.session.commit()
 
     return render_template(
@@ -43,3 +35,17 @@ def news(news_id):
 
     return render_template('news.html', news=news,
                            journalist=news.journalist)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(meta={'csrf': False} )
+    if form.validate_on_submit():
+        user = Journalist(name=form.username.data, email=form.email.data, surname=form.user_surname.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+
+        db.session.add(user)
+        db.session.commit()
+    return render_template('register.html', title='Register', form=form)
