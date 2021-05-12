@@ -31,3 +31,13 @@ def test_status_register(client):
     """
     return_value = client.get('/register')
     assert return_value.status_code == 200
+
+
+def test_status_login(client):
+    """
+    Check status code
+    :param client: client fixture
+    :return: bool
+    """
+    return_value = client.get('/login')
+    assert return_value.status_code == 200
