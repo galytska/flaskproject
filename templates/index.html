@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Good news home page</title>
-</head>
-<body>
-<h1>Good news only</h1>
+{% extends "base.html" %}
+{% block content %}
 {% for news in good_news %}
-<li>{{ news.news_text }}</li>
+<li>
+    <a href="{{url_for('news', news_id = news.id)}}">
+        {{ news.title }}</a>
+
+</li>
 {% endfor %}
 
 <form method="POST">
@@ -15,12 +13,15 @@
     <p>
         {{ template_form.news.label }}
         {{ template_form.news() }}
+        <p>
+        {{ template_form.news_text.label }}
+        {{ template_form.news_text() }}
+        </p>
     </p>
+
     <p>
         {{ template_form.submit() }}
     </p>
 
 </form>
-
-</body>
-</html>
+{% endblock %}
