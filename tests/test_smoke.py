@@ -41,3 +41,12 @@ def test_status_login(client):
     """
     return_value = client.get('/login')
     assert return_value.status_code == 200
+
+
+def test_empty_db(client):
+    """Start with a blank database."""
+
+    rv = client.get('/')
+    assert b'Good news' in rv.data
+
+
