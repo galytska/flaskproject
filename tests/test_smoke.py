@@ -44,16 +44,42 @@ def test_status_login(client):
 
 
 def test_correct_template(client):
-    """Start with a blank database."""
+    """
+    Verify expected template is shown
+    :param client:
+    :return:
+    """
 
-    rv = client.get('/')
-    assert b'Good news' in rv.data
+    response = client.get('/')
+    assert b'Good news' in response.data
+
+
+def test_correct_template_register(client):
+    """
+    Verify expected template is shown
+    :param client:
+    :return:
+    """
+
+    response = client.get('/register')
+    assert b'Register Here' in response.data
+
+
+def test_correct_template_login(client):
+    """
+    Verify expected template is shown
+    :param client:
+    :return:
+    """
+
+    response = client.get('/login')
+    assert b'Sign In' in response.data
 
 
 def test_messages(client):
     """Test that messages work."""
-    rv = client.post('/', data=dict(
+    response = client.post('/', data=dict(
         news='Hello',
         news_text='allowed here'
     ), follow_redirects=True)
-    assert rv.status_code == 200
+    assert response.status_code == 200
