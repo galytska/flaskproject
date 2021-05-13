@@ -2,3 +2,11 @@ h1 {
     color: palevioletred;
 }
 
+.error {
+    color: red;
+}
+
+.user_page {
+    background-color: #E8DCD9;
+    font-family: cursive;
+}

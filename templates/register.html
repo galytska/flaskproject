@@ -1,5 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
 <head>
-  <h1>Register Here</h1>
+  <h2>Register Here</h2>
 </head>
 <br>
 {% with messages = get_flashed_messages() %}
@@ -17,33 +19,34 @@
         <p>
             {{ form.username(size=32,placeholder="username") }}<br>
             {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span class="error">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.user_surname(size=32,placeholder="user surname") }}<br>
             {% for error in form.user_surname.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span class="error">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.email(size=32,placeholder="email@gmail.com") }}<br>
             {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span class="error">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.password(size=32,placeholder="password*$%!@") }}<br>
             {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span class="error">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.password2(size=32,placeholder="password*$%!@") }}<br>
             {% for error in form.password2.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span class="error">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
     </form>
 </body>
+{% endblock %}
