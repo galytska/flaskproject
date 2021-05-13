@@ -1,7 +1,7 @@
 """
 Routes of the application
 """
-from flask_login import login_required, login_user
+from flask_login import login_required, login_user, logout_user
 from werkzeug.utils import redirect
 
 from app import app, db, login_manager
@@ -63,7 +63,7 @@ def register():
 @login_required
 def user(username):
     user = Journalist.query.filter_by(name=username).first_or_404()
-    return render_template('user.html', user=user)
+    return render_template('user.html', current_user=user)
 
 
 @login_manager.user_loader
@@ -78,9 +78,19 @@ def login():
         user = Journalist.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
-            # next_page = request.args.get('next')
-            # return redirect(next_page) if next_page else redirect(url_for('index', _external=True, _scheme='http'))
-            return redirect(url_for('index', _external=True, _scheme='http'))
+            return render_template('user.html', user=user)
         else:
-            return redirect(url_for('login', _external=True, _scheme='http'))
+            return login_manager.unauthorized()
     return render_template('login.html', form=form)
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return "Please logged in to view this page"
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))

@@ -3,7 +3,7 @@ body {
   background-color: #E8DCD9;
   font-family: cursive;
 }</style></head>
-
+<a href="{{ url_for('logout') }}">Logout</a>
 {% if current_user.is_authenticated %}
-  Hi {{ current_user.username }}!
+  Hi {{ current_user.name }}!
 {% endif %}
