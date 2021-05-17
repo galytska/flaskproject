@@ -7,6 +7,7 @@ import os
 
 from app import db
 from models import Journalist, News
+from tests.test_data import journalist1, journalist2
 
 filename = os.path.splitext(__file__)[0]
 logging.basicConfig(filename=f'{filename}.log',
@@ -18,9 +19,11 @@ logging.basicConfig(filename=f'{filename}.log',
 logger = logging.getLogger(__name__)
 logger.info("Start create DB data")
 
-j1 = Journalist(id=1, name='Ann', surname='Smith', email='smith@gmail.com')
-j2 = Journalist(id=2, name='Bob', surname='Bin', email='bin@gmail.com')
 
+j1 = Journalist(id=1, name='Ann', surname='Smith', email='smith@gmail.com', password_hash=hash)
+j1.set_password(journalist1['password'])
+j2 = Journalist(id=2, name='Bob', surname='Bin', email='bin@gmail.com')
+j2.set_password(journalist2['password'])
 n1 = News(id=1,
           title='fine weather',
           text='Weather is driven by air pressure, '

@@ -106,7 +106,7 @@ def login():
             return redirect(url_for('user', username=user.name))
         else:
             app.logger.info(
-                f'user "{user.name}" "{user.surname}" failed logged in')
+                f'user "user failed logged in')
             return login_manager.unauthorized()
     return render_template('login.html', form=form)
 
