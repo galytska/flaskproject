@@ -7,21 +7,4 @@
 
 </li>
 {% endfor %}
-
-<form method="POST">
-    {{ template_form.hidden_tag() }}
-    <p>
-        {{ template_form.news.label }}
-        {{ template_form.news() }}
-        <p>
-        {{ template_form.news_text.label }}
-        {{ template_form.news_text() }}
-        </p>
-    </p>
-
-    <p>
-        {{ template_form.submit() }}
-    </p>
-
-</form>
 {% endblock %}

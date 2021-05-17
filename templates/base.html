@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Good news only</title>
-     <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
-  <body>
-  <h1>Good news</h1>
-  {%block content%}{%endblock%}
-  </body>
+<body>
+    <a href="{{ url_for('index') }}">Home</a>
+    {% if current_user.is_anonymous %}
+    <a href="{{ url_for('login') }}">Login</a>
+    {% else %}
+    <a href="{{ url_for('user', username=current_user.name) }}">Profile</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
+
+    <h1>Good news</h1>
+    {%block content%}{%endblock%}
+</body>
 </html>

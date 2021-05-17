@@ -1,9 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 <body class="user_page">
-<a href="{{ url_for('logout') }}">Logout</a>
 {% if current_user.is_authenticated %}
   Hi {{ current_user.name }}!
 {% endif %}
+<h3>Add news here</h3>
+<form method="POST">
+    {{ template_form.hidden_tag() }}
+    <p>
+        {{ template_form.news.label }}
+        {{ template_form.news() }}
+        <p>
+        {{ template_form.news_text.label }}
+        {{ template_form.news_text() }}
+        </p>
+    </p>
+
+    <p>
+        {{ template_form.submit() }}
+    </p>
+
+</form>
+
+
 </body>
 {% endblock %}

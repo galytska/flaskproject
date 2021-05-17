@@ -17,13 +17,9 @@ def index():
     Home page
     :return: render_template function call
     """
-    if 'news' in request.form:
-        db.session.add(News(title=request.form['news'], text=request.form['news_text']))
-        db.session.commit()
-
+    good_news=News.query.order_by(News.id.desc()).limit(10)
     return render_template(
-        'index.html', good_news=News.query.all(),
-        template_form=GoodNewsForm())
+        'index.html', good_news=good_news)
 
 
 @app.route('/news/<int:news_id>')
@@ -59,11 +55,16 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/user/<username>')
+@app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
     user = Journalist.query.filter_by(name=username).first_or_404()
-    return render_template('user.html', current_user=user)
+    if 'news' in request.form:
+        db.session.add(News(title=request.form['news'], text=request.form['news_text'], journalist_id=user.id))
+        db.session.commit()
+        return redirect(url_for('index'))
+
+    return render_template('user.html', current_user=user, template_form=GoodNewsForm())
 
 
 @login_manager.user_loader
@@ -78,7 +79,7 @@ def login():
         user = Journalist.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
-            return render_template('user.html', user=user)
+            return redirect(url_for('user', username=user.name))
         else:
             return login_manager.unauthorized()
     return render_template('login.html', form=form)
