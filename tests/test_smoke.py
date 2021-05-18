@@ -1,98 +1,42 @@
 """
 Smoke tests
 """
+import pytest
+
+from tests.test_data import journalist1, news1
 
 
-def test_status_code(client):
+@pytest.mark.parametrize("path",
+                         ['/',
+                          '/news/1',
+                          '/register',
+                          '/login',
+                          f'/user/{journalist1["name"]}',
+                          '/logout'])
+def test_status_code(client, path):
     """
-    Check status code
-    :param client: client fixture
+    Verify status code is 200
+    :param client: client object
+    :param path: page pas: str
     :return: bool
     """
-    return_value = client.get('/')
+    return_value = client.get(path)
     assert return_value.status_code == 200
 
 
-def test_status_news(client):
-    """
-    Check status code
-    :param client: client fixture
-    :return: bool
-    """
-    return_value = client.get('/news/1')
-    assert return_value.status_code == 200
-
-
-def test_status_register(client):
-    """
-    Check status code
-    :param client: client fixture
-    :return: bool
-    """
-    return_value = client.get('/register')
-    assert return_value.status_code == 200
-
-
-def test_status_login(client):
-    """
-    Check status code
-    :param client: client fixture
-    :return: bool
-    """
-    return_value = client.get('/login')
-    assert return_value.status_code == 200
-
-
-def test_correct_template(client):
+@pytest.mark.parametrize("path, expected_txt",
+                         [('/', b'Good news'),
+                          ('/register', b'Register Here'),
+                          ('/login', b'Sign In'),
+                          ('/news/1', f'{news1["title"]}'.title().encode()),
+                          ('/logout', b'Please logged in to view this page'),
+                          (f'/user/{journalist1["name"]}',
+                           b'Please logged in to view this page')])
+def test_correct_template(client, path, expected_txt):
     """
     Verify expected template is shown
     :param client:
     :return:
     """
-
-    response = client.get('/')
-    assert b'Good news' in response.data
-
-
-def test_correct_template_register(client):
-    """
-    Verify expected template is shown
-    :param client:
-    :return:
-    """
-
-    response = client.get('/register')
-    assert b'Register Here' in response.data
-
-
-def test_correct_template_login(client):
-    """
-    Verify expected template is shown
-    :param client:
-    :return:
-    """
-
-    response = client.get('/login')
-    assert b'Sign In' in response.data
-
-
-def test_messages(client):
-    """Test that messages work."""
-    response = client.post('/', data=dict(
-        news='Hello',
-        news_text='allowed here'
-    ), follow_redirects=True)
-    assert response.status_code == 200
-
-
-def test_invalid_register_post(client):
-    """Test invalid message."""
-    fake_data = 1
-    response = client.post('/register', data=dict(
-        username=fake_data,
-        email=fake_data,
-        surname=fake_data,
-        password=fake_data
-
-    ), follow_redirects=True)
-    assert b'Invalid email address' in response.data
+    response = client.get(path)
+    assert expected_txt in response.data

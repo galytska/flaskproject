@@ -1,28 +1,14 @@
 """
 Login tests
 """
-from tests.test_data import journalist1
-
-email = journalist1['email']
-password = journalist1['password']
-
-
-def login(client, username, password):
-    return client.post('/login', data=dict(
-        email=username,
-        password=password
-    ), follow_redirects=True)
-
-
-def logout(client):
-    return client.get('/logout', follow_redirects=True)
+from conftest import email, login, logout, password
 
 
 def test_login_logout(client):
     """Make sure login and logout works."""
     rv = login(client, email, password)
     assert b'Add news here' in rv.data
-    b'Login' not in rv.data
+    assert b'Login' not in rv.data
 
     rv = logout(client)
     assert b'Login' in rv.data
