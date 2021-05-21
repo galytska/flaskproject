@@ -3,14 +3,28 @@
 <h2>{{ news.title | title }}</h2>
 <p>By {{ journalist.name }}
     {% if journalist.surname | lower == 'smith' %}
-        {{ journalist.surname }} - Top author
+    {{ journalist.surname }} - Top author
     {% else %}
-        {{ journalist.surname }}
+    {{ journalist.surname }}
     {% endif %}
-
-
 </p>
 <p>{{ news.text }}</p>
+
+<p>
+    {% if journalist_news|length > 1 %}
+        Other articles by {{ journalist.name }} {{ journalist.surname }}
+        {% for n in journalist_news %}
+            {% if n.id != news.id %}
+
+                <li>
+                    <a href="{{url_for('news', news_id = n.id)}}">
+                    {{ n.title }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+</p>
 {% endblock %}
 
 

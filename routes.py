@@ -36,7 +36,8 @@ def news(news_id):
         id=news_id).first_or_404(description="There is no news with this ID.")
 
     return render_template('news.html', news=news,
-                           journalist=news.journalist)
+                           journalist=news.journalist,
+                           journalist_news=list(news.journalist.news_article))
 
 
 @app.route('/register', methods=['GET', 'POST'])
