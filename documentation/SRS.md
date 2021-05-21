@@ -46,6 +46,7 @@ when I try wrong email or password to login
 
 ### 2.4 Add news
 As a logged in journalist I want to add news so that my news is shown on home page
+
 ![test image](mockups/add_news.png)
 
  
