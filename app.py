@@ -24,7 +24,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
     environ.get('DATABASE_URL').replace('postgres://', 'postgresql://') \
         if environ.get(
         'DATABASE_URL') else 'sqlite:///myDB.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myDB.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
